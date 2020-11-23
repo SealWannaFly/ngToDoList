@@ -1,0 +1,21 @@
+.main-frame{
+  min-width: 400px;
+  margin: 5% 25%;
+  padding: 2px;
+  border: 1px solid black;
+}
+
+.container{
+  min-width: 400px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 1px;
+}
+
+h1{
+  width: 99%;
+  text-align: center;
+  margin: 1px;
+  border: 1px solid grey;
+}
