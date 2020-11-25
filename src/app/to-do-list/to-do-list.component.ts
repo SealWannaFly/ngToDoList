@@ -20,12 +20,7 @@ export interface Task{
 export class ToDoListComponent implements OnInit {
   newTask: Task;
 
-  tasks: Task[] = [{ id: 0,
-    text: 'Тестовая Задача',
-    priority: 'high',
-    creationDate: new Date(),
-    resultDate: null,
-    result: ''}];
+  tasks: Task[] = [];
 
   constructor(private http: HttpClient,
               private transferService: TransferService,
@@ -48,10 +43,24 @@ export class ToDoListComponent implements OnInit {
 
   addTask(): void{
     if (this.newTask){
-      this.http.post<Task>('http://127.0.0.1:3000/items', this.newTask).subscribe(task => {
+      this.http.post<Task>('http://127.0.0.1:3000/items', this.newTask)
+        .subscribe(task => {
         this.tasks.push(task);
         this.newTask = undefined;
       });
     }
+  }
+
+  setResult(result: boolean): void {
+    result = !result;
+  }
+
+
+  deleteTask(id: number): void{
+    console.log('delete...');
+    this.http.delete<void>(`http://127.0.0.1:3000/items/${id}`)
+      .subscribe(() => {
+        this.tasks.filter(task => task.id !== id);
+      });
   }
 }

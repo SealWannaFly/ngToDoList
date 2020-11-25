@@ -1,22 +1,28 @@
-<ol>
-  <li *ngFor="let task of tasks">
-    <div class="container">
-      {{task.priority}}
-      {{task.text | titlecase}}
-      <button mat-icon-button type="button" (click)="">
-        <mat-icon>check_circle</mat-icon>
-      </button>
-      <button mat-icon-button type="button">
-        <mat-icon>cancel</mat-icon>
-      </button>
-      <button mat-icon-button type="button">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-    <div class="container">
-      {{task.creationDate | date:'medium'}}
-      {{task.resultDate | date:'medium'}}
-      {{task.result}}
-    </div>
-  </li>
-</ol>
+<div *ngIf="tasks.length; else emptyBlock">
+  <ol>
+    <li *ngFor="let task of tasks">
+      <div class="container">
+        {{task.priority}}
+        {{task.text | titlecase}}
+        <button mat-icon-button type="button" (click)="setResult(true)">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+        <button mat-icon-button type="button" (click)="setResult(false)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <button mat-icon-button type="button" (click)="deleteTask(task.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="container">
+        {{task.creationDate | date:'medium'}}
+        {{task.resultDate | date:'medium'}}
+        {{task.result}}
+      </div>
+    </li>
+  </ol>
+</div>
+
+<ng-template #emptyBlock>
+  <p>Нет задач!</p>
+</ng-template>
