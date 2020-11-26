@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Task} from './to-do-list/to-do-list.component';
 import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
+import { Task } from './http.service';
 
 @Injectable({
   providedIn: 'root'

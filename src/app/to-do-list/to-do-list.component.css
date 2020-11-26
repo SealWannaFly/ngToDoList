@@ -1,0 +1,7 @@
+.done{
+  border: 2px solid green;
+}
+
+.canceled{
+  border: 2px solid red;
+}

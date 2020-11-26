@@ -2,15 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TransferService} from '../transfer.service';
 import {Router} from '@angular/router';
-
-export interface Task{
-  id: number;
-  text: string;
-  priority: string;
-  creationDate: Date;
-  resultDate: Date;
-  result: string;
-}
+import {HttpService, Task} from '../http.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -22,14 +14,14 @@ export class ToDoListComponent implements OnInit {
 
   tasks: Task[] = [];
 
-  constructor(private http: HttpClient,
+  constructor(private httpService: HttpService,
               private transferService: TransferService,
               private router: Router) {
     this.router.navigateByUrl('/add-form');
   }
 
   ngOnInit(): void {
-    this.http.get<Task[]>('http://127.0.0.1:3000/items')
+    this.httpService.getTasks()
       .subscribe(tasks => {
         this.tasks = tasks;
       });
@@ -43,24 +35,36 @@ export class ToDoListComponent implements OnInit {
 
   addTask(): void{
     if (this.newTask){
-      this.http.post<Task>('http://127.0.0.1:3000/items', this.newTask)
+      this.newTask.creationDate = new Date();
+      this.httpService.addTask(this.newTask)
         .subscribe(task => {
-        this.tasks.push(task);
-        this.newTask = undefined;
-      });
+          this.tasks.push(task);
+          this.newTask = undefined;
+        });
     }
   }
 
-  setResult(result: boolean): void {
-    result = !result;
+  setResult(id: number, result: string): void {
+    const task: Task = this.tasks.filter(t => t.id === id)[0];
+    let resultDate: Date = new Date();
+
+    if (task.result === result){
+      result = '';
+      resultDate = null;
+    }
+
+    this.httpService.setResult(id, result, resultDate)
+      .subscribe(t => {
+        task.result = t.result;
+        task.resultDate = t.resultDate;
+      });
   }
 
 
   deleteTask(id: number): void{
-    console.log('delete...');
-    this.http.delete<void>(`http://127.0.0.1:3000/items/${id}`)
+    this.httpService.deleteTask(id)
       .subscribe(() => {
-        this.tasks.filter(task => task.id !== id);
+        this.tasks = this.tasks.filter(task => task.id !== id);
       });
   }
 }

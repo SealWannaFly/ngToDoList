@@ -1,24 +1,27 @@
 <div *ngIf="tasks.length; else emptyBlock">
   <ol>
-    <li *ngFor="let task of tasks">
+    <li *ngFor="let task of tasks"
+        [ngClass]="(task.result === 'done') ? 'done' : ((task.result === 'canceled') ? 'canceled' : '')">
       <div class="container">
         {{task.priority}}
         {{task.text | titlecase}}
-        <button mat-icon-button type="button" (click)="setResult(true)">
+        <button mat-icon-button type="button" (click)="setResult(task.id, 'done')">
           <mat-icon>check_circle</mat-icon>
         </button>
-        <button mat-icon-button type="button" (click)="setResult(false)">
+        <button mat-icon-button type="button" (click)="setResult(task.id, 'canceled')">
           <mat-icon>cancel</mat-icon>
         </button>
         <button mat-icon-button type="button" (click)="deleteTask(task.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <div class="container">
-        {{task.creationDate | date:'medium'}}
-        {{task.resultDate | date:'medium'}}
-        {{task.result}}
+      <div class="container" *ngIf="task.result else creationBlock">
+        Created at {{task.creationDate | date:'medium'}}
+        {{task.result | titlecase}} at {{task.resultDate | date:'medium'}}
       </div>
+      <ng-template #creationBlock>
+        Created at {{task.creationDate | date:'medium'}}
+      </ng-template>
     </li>
   </ol>
 </div>
