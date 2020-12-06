@@ -1,0 +1,37 @@
+<form *ngIf="task; else LoadingBlock" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field appearance="legacy">
+      <mat-label>Задача</mat-label>
+      <input matInput formControlName="text" [value]="task.text">
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy">
+      <mat-label>Важность</mat-label>
+      <mat-select [(value)]="task.priority" formControlName="priority">
+        <mat-option *ngFor="let priority of priorities" [value]="priority">
+          {{priority | titlecase}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-icon-button type="button" [routerLink]="'/'">
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+  </p>
+
+  <p *ngIf="task.result else creationBlock">
+    Created at {{task.creationDate | date:'medium'}}
+    {{task.result | titlecase}} at {{task.resultDate | date:'medium'}}
+  </p>
+  <ng-template #creationBlock>
+    Created at {{task.creationDate | date:'medium'}}
+  </ng-template>
+
+  <p>
+    <button mat-raised-button type="submit" [disabled]="editForm.invalid">Сохранить</button>
+  </p>
+</form>
+
+<ng-template #LoadingBlock>
+  <p>Загрузка...</p>
+</ng-template>

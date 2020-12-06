@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {TransferService} from '../transfer.service';
 import {Router} from '@angular/router';
 import {HttpService, Task} from '../http.service';
+import {FilterParams} from '../pipes/filter.pipe';
 
 @Component({
   selector: 'app-to-do-list',
@@ -10,9 +10,16 @@ import {HttpService, Task} from '../http.service';
   styleUrls: ['./to-do-list.component.css'],
 })
 export class ToDoListComponent implements OnInit {
-  newTask: Task;
+  priorities = ['all', 'done', 'canceled'];
 
+  newTask: Task;
   tasks: Task[] = [];
+  error = '';
+  filterParams: FilterParams = {
+    priority: [],
+    result: 'all'
+  };
+  asc = false;
 
   constructor(private httpService: HttpService,
               private transferService: TransferService,
@@ -24,13 +31,17 @@ export class ToDoListComponent implements OnInit {
     this.httpService.getTasks()
       .subscribe(tasks => {
         this.tasks = tasks;
+      }, error => {
+        this.error = error.message;
       });
 
     this.transferService.isNew$.subscribe(isOpen => {
       if (isOpen){
         this.newTask = this.transferService.getTask();
         this.addTask();
-      }});
+      }}, error => {
+      this.error = error.message;
+    });
   }
 
   addTask(): void{
@@ -40,6 +51,8 @@ export class ToDoListComponent implements OnInit {
         .subscribe(task => {
           this.tasks.push(task);
           this.newTask = undefined;
+        }, error => {
+          this.error = error.message;
         });
     }
   }
@@ -57,14 +70,37 @@ export class ToDoListComponent implements OnInit {
       .subscribe(t => {
         task.result = t.result;
         task.resultDate = t.resultDate;
+      }, error => {
+        this.error = error.message;
       });
   }
 
 
   deleteTask(id: number): void{
     this.httpService.deleteTask(id)
-      .subscribe(() => {
+        .subscribe(() => {
         this.tasks = this.tasks.filter(task => task.id !== id);
-      });
+      }, error => {
+          this.error = error.message;
+        });
+  }
+
+  // mat-checkbox returns Object
+  onCheckboxChange(event): void {
+    if (event.source.name === 'priority'){
+      if (event.checked){
+        this.filterParams.priority.push(event.source.value);
+      }else{
+        this.filterParams.priority = this.filterParams.priority.filter(param => param !== event.source.value);
+      }
+    }
+
+    if (event.source.name === 'result'){
+      if (event.checked){
+        this.filterParams.result = event.source.value;
+      }else{
+        this.filterParams.priority = this.filterParams.priority.filter(param => param !== event.source.value);
+      }
+    }
   }
 }
