@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {TransferService} from '../transfer.service';
+import {TransferService} from '../entities/services/transfer.service';
 import {Router} from '@angular/router';
 
 @Component({

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {EditFormComponent} from '../edit-form/edit-form.component';
-import {AddFormComponent} from '../add-form/add-form.component';
-import {ToDoListComponent} from '../to-do-list/to-do-list.component';
-import {HomeComponent} from '../home/home.component';
+import {EditFormComponent} from '../common/edit-form/edit-form.component';
+import {AddFormComponent} from '../common/add-form/add-form.component';
+import {ToDoListComponent} from '../common/to-do-list/to-do-list.component';
+import {HomeComponent} from '../common/home/home.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, children: [

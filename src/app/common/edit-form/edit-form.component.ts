@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpService, Task} from '../http.service';
+import {HttpService, Task} from '../entities/services/http.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 

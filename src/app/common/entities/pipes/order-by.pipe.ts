@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Task} from '../http.service';
+import {Task} from '../services/http.service';
 
 @Pipe({
   name: 'orderBy'
