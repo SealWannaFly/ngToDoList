@@ -11,6 +11,7 @@ const routes: Routes = [
       {path: 'to-do-list', component: ToDoListComponent}
     ]},
   {path: 'task/:id', component: EditFormComponent},
+  {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

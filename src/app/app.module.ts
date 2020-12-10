@@ -9,7 +9,6 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
-import {FilterPipe} from './pipes/filter.pipe';
 import {OrderByPipe } from './pipes/order-by.pipe';
 import {EditFormComponent} from './edit-form/edit-form.component';
 import {AppRoutingModule} from './modules/app-routing.module';
@@ -20,7 +19,6 @@ import {HomeComponent} from './home/home.component';
     AppComponent,
     AddFormComponent,
     ToDoListComponent,
-    FilterPipe,
     OrderByPipe,
     EditFormComponent,
     HomeComponent

@@ -2,19 +2,23 @@
   min-width: 400px;
   display: flex;
   flex-flow: row wrap;
+  align-item: center;
   justify-content: space-between;
-  margin: 1px;
+  margin: 1px 2px;
 }
 
-input{
-  width: 70%;
-  padding: 1px 2px;
+.text-field{
+  width: 60%;
 }
 
-select{
-  padding: 1px 2px;
+.priority-field{
+  width: 20%;
 }
 
-button{
-  padding: 1px 2px;
+.btn-submit{
+  width: 10%;
+}
+
+mat-icon{
+  font-size: 28px;
 }

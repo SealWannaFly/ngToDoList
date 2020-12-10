@@ -1,6 +1,6 @@
-<div>
-  <mat-form-field appearance="legacy">
-    <mat-label>Важность</mat-label>
+<div class="container" xmlns:style="http://www.w3.org/1999/xhtml">
+  <mat-form-field class="result-filter" appearance="legacy">
+    <mat-label>Готовность</mat-label>
     <mat-select [(value)]="filterParams.result">
       <mat-option *ngFor="let priority of priorities" [value]="priority">
         {{priority | titlecase}}
@@ -8,11 +8,11 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-checkbox class="filter-checkbox" name="priority" value="low" (change)="onCheckboxChange($event)">Low</mat-checkbox>
-  <mat-checkbox class="filter-checkbox" name="priority" value="medium" (change)="onCheckboxChange($event)">Medium</mat-checkbox>
-  <mat-checkbox class="filter-checkbox" name="priority" value="high" (change)="onCheckboxChange($event)">High</mat-checkbox>
+  <mat-checkbox class="priority-filter" name="priority" value="low" (change)="onCheckboxChange($event)">Low</mat-checkbox>
+  <mat-checkbox class="priority-filter" name="priority" value="medium" (change)="onCheckboxChange($event)">Medium</mat-checkbox>
+  <mat-checkbox class="priority-filter" name="priority" value="high" (change)="onCheckboxChange($event)">High</mat-checkbox>
 
-  <button mat-icon-button type="button" (click)="asc = !asc">
+  <button mat-icon-button class="btn-sort" type="button" (click)="asc = !asc">
     <mat-icon>sort</mat-icon>
   </button>
 </div>
@@ -20,14 +20,12 @@
 <div *ngIf="tasks.length; else emptyBlock">
   <ol>
     <li
-      *ngFor="let task of tasks | filter:filterParams | orderBy:asc"
-      [ngClass]="(task.result === 'done') ? 'done' : ((task.result === 'canceled') ? 'canceled' : '')"
+      *ngFor="let task of filterTasks()  | orderBy:asc"
+      [ngClass]="(task.result === 'done') ? 'done' : ((task.result === 'canceled') ? 'canceled' : 'in-progress')"
     >
-      <div>
-        <span [routerLink]="['task', task.id]">
-          {{task.priority}}
-          {{task.text | titlecase}}
-        </span>
+      <div class="task">
+        <span class="task-priority">{{task.priority}}</span>
+        <span class="task-text" [routerLink]="['task', task.id]">{{task.text | titlecase}}</span>
         <button mat-icon-button type="button" (click)="setResult(task.id, 'done')">
           <mat-icon>check_circle</mat-icon>
         </button>
@@ -38,13 +36,14 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <div class="container" *ngIf="task.result else creationBlock">
-        Created at {{task.creationDate | date:'medium'}}
-        {{task.result | titlecase}} at {{task.resultDate | date:'medium'}}
+      <div class="task">
+        <p class="creation-date">
+          <small>Created at {{task.creationDate | date:'medium'}}</small>
+        </p>
+        <p class="result-date" *ngIf="task.result">
+          <small>{{task.result | titlecase}} at {{task.resultDate | date:'medium'}}</small>
+        </p>
       </div>
-      <ng-template #creationBlock>
-        Created at {{task.creationDate | date:'medium'}}
-      </ng-template>
     </li>
   </ol>
 </div>

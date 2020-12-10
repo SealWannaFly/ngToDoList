@@ -11,6 +11,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class EditFormComponent implements OnInit {
   priorities = ['Low', 'Medium', 'High'];
 
+  message = 'Загрузка...';
   editForm: FormGroup;
 
   task: Task;
@@ -28,11 +29,18 @@ export class EditFormComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       this.httpService.getTaskById(+params.id).subscribe(task => {
-        this.task = task;
-        this.editForm.patchValue({
-          text: this.task.text,
-          priority: this.task.priority
-        });
+        if (task){
+          this.task = task;
+          this.editForm.patchValue({
+            text: this.task.text,
+            priority: this.task.priority
+          });
+        } else {
+          this.message = 'Время соединения вышло! Через 5 секунд вы вернетесь назад';
+          setTimeout (() => {
+            this.router.navigateByUrl('/');
+          }, 5000);
+        }
       });
     });
   }

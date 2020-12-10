@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {TransferService} from '../transfer.service';
 import {Router} from '@angular/router';
 import {HttpService, Task} from '../http.service';
-import {FilterParams} from '../pipes/filter.pipe';
 
 @Component({
   selector: 'app-to-do-list',
@@ -15,7 +14,7 @@ export class ToDoListComponent implements OnInit {
   newTask: Task;
   tasks: Task[] = [];
   error = '';
-  filterParams: FilterParams = {
+  filterParams = {
     priority: [],
     result: 'all'
   };
@@ -32,7 +31,7 @@ export class ToDoListComponent implements OnInit {
       .subscribe(tasks => {
         this.tasks = tasks;
       }, error => {
-        this.error = error.message;
+        this.error = 'Ошибка при загрузке';
       });
 
     this.transferService.isNew$.subscribe(isOpen => {
@@ -102,5 +101,10 @@ export class ToDoListComponent implements OnInit {
         this.filterParams.priority = this.filterParams.priority.filter(param => param !== event.source.value);
       }
     }
+  }
+
+  filterTasks(): Task[]{
+    return this.tasks.filter(task => ((task.result === this.filterParams.result || this.filterParams.result === 'all')
+      && (this.filterParams.priority.includes(task.priority.toLowerCase()) || this.filterParams.priority.length === 0)));
   }
 }

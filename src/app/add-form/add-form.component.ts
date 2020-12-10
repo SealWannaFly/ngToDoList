@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./add-form.component.css']
 })
 export class AddFormComponent implements OnInit {
+  priorities = ['Low', 'Medium', 'High'];
   form: FormGroup;
 
   constructor(

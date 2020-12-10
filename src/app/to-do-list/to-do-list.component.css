@@ -1,15 +1,72 @@
+.container{
+  min-width: 300px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+  margin: 1px 2px;
+  padding: 1px 2px;
+}
+
+ol{
+  margin: 2px 2%;
+  padding: 1px 2px;
+}
+
+li{
+  margin: 2px 1%;
+  padding: 1px 2px;
+}
+
+.task{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.task-priority{
+  text-align: center;
+  border: 1px solid grey;
+  width: 13%;
+}
+
+.task-text{
+  margin: 0 2%;
+  width: 60%
+}
+
+.result-filter{
+  width: 20%;
+}
+
+.priority-filter{
+  margin: 2px 0 2px 4%;
+}
+
+.btn-sort{
+  margin: 2px 0 2px 4%;
+}
+
+.creation-date{
+  margin: 1px 18% 1px 2px;
+  width: 40%;
+}
+
+.result-date{
+  margin: 1px 2px 1px 2px;
+  width: 40%;
+}
+
+.in-progress{
+  border: 2px solid black;
+}
+
 .done{
   border: 2px solid green;
 }
 
 .canceled{
   border: 2px solid red;
-}
-
-.filter-checkbox{
-  margin: 2px 0 2px 5%;
-}
-
-div{
-  padding: 1px 2px;
 }
