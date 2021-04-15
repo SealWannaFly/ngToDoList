@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {TransferService} from '../entities/services/transfer.service';
+import {TransferService} from '../../../../common/entities/services/transfer.service';
 import {Router} from '@angular/router';
-import {HttpService, Task} from '../entities/services/http.service';
+import {HttpService, Task} from '../../../../common/entities/services/http.service';
 
 @Component({
   selector: 'app-to-do-list',
